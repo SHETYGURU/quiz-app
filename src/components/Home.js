@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiMail, FiArrowRight } from "react-icons/fi";
 import { AiOutlineClose } from "react-icons/ai";
-import Navbar from "./Navbar";
 
 const Home = () => {
   const [email, setEmail] = useState("");

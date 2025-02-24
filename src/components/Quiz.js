@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { FaCheck, FaForward } from "react-icons/fa";
 import { shuffleArray } from "../utils/shuffle";
 import { questions as originalQuestions } from "../utils/questions";
@@ -28,6 +28,24 @@ const Quiz = ({ onComplete }) => {
     );
     setQuestions(shuffledQuestions);
   }, []);
+  
+  const handleNextQuestion = useCallback(
+    (answered) => {
+      setTimeout(() => {
+        if (currentQuestion < questions.length - 1) {
+          setCurrentQuestion((prev) => prev + 1);
+          setSelectedAnswer("");
+          setTimer(30);
+          setInputStatus(null);
+        } else {
+          onComplete(score);
+        }
+      }, answered ? 600 : 500);
+    },
+    [currentQuestion, questions.length, onComplete, score]
+  );
+  
+  
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -40,8 +58,8 @@ const Quiz = ({ onComplete }) => {
     if (timer === 0) {
       handleNextQuestion(false);
     }
-  }, [timer]);
-
+  }, [timer, handleNextQuestion]);
+  
   useEffect(() => {
     setProgress(((currentQuestion + 1) / questions.length) * 100);
   }, [currentQuestion, questions.length]);
@@ -66,19 +84,6 @@ const Quiz = ({ onComplete }) => {
     }
 
     setTimeout(() => handleNextQuestion(true), 600);
-  };
-
-  const handleNextQuestion = (answered) => {
-    setTimeout(() => {
-      if (currentQuestion < questions.length - 1) {
-        setCurrentQuestion((prev) => prev + 1);
-        setSelectedAnswer("");
-        setTimer(30);
-        setInputStatus(null);
-      } else {
-        onComplete(score);
-      }
-    }, answered ? 600 : 500);
   };
 
   if (questions.length === 0) return <div>Loading...</div>;
