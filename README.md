@@ -30,7 +30,7 @@ A **React-based Quiz Scoreboard** that tracks users' quiz scores, stores them in
 - Contains **Profile** and **Logout** buttons  
 
 ### ✅ **Scoreboard Component**
-- **Saves quiz scores in Firestore** (if user email exists in `localStorage`)  
-- **Displays dynamic appreciation messages** based on score  
+- **Saves quiz scores in Firestore** 
+- **Displays dynamic appreciation messages** 
 - **Includes "Try Again" and "My Results" buttons**  
 
