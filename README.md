@@ -14,7 +14,7 @@ A **React-based Quiz Scoreboard** that tracks users' quiz scores, stores them in
 ---
 
 ## **🚀 Live Demo**  
-🔗 [**Click here to view the live demo**](https://quizzsite.netlify.app/https://quizzsite.netlify.app/) 
+🔗 [**Click here to view the live demo**](https://quizzsite.netlify.app/) 
 
 
 ## **📦 Tech Stack**
