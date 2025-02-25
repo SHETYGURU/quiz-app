@@ -30,7 +30,7 @@ const Quiz = ({ onComplete }) => {
   }, []);
   
   const handleNextQuestion = useCallback(
-    (answered) => {
+    (answered, isCorrect) => {
       setTimeout(() => {
         if (currentQuestion < questions.length - 1) {
           setCurrentQuestion((prev) => prev + 1);
@@ -38,14 +38,15 @@ const Quiz = ({ onComplete }) => {
           setTimer(30);
           setInputStatus(null);
         } else {
-          onComplete(score);
+          // Ensure the latest score is used when quiz completes
+          onComplete(isCorrect ? score + 1 : score);
         }
       }, answered ? 600 : 500);
     },
     [currentQuestion, questions.length, onComplete, score]
   );
   
-  
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -66,25 +67,26 @@ const Quiz = ({ onComplete }) => {
 
   const handleSubmitAnswer = () => {
     if (selectedAnswer === "") return;
-
+  
     const currentQ = questions[currentQuestion];
     let isCorrect = false;
-
+  
     if (currentQ.type === "integer") {
       isCorrect = parseInt(selectedAnswer, 10) === currentQ.correct;
     } else if (currentQ.type === "mcq") {
       isCorrect = selectedAnswer === currentQ.options[currentQ.correct];
     }
-
+  
     if (isCorrect) {
       setScore((prev) => prev + 1);
       setInputStatus("correct");
     } else {
       setInputStatus("incorrect");
     }
-
-    setTimeout(() => handleNextQuestion(true), 600);
+  
+    setTimeout(() => handleNextQuestion(true, isCorrect), 600);
   };
+  
 
   if (questions.length === 0) return <div>Loading...</div>;
 
